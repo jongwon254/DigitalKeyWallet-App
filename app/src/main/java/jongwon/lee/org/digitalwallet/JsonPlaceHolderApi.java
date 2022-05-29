@@ -15,5 +15,5 @@ public interface JsonPlaceHolderApi {
     Call<List<Key>> getKeys(@Header("Authorization") String authHeader);
 
     @POST("auth/login")
-    Call<User> createUser(@Body User user);
+    Call<Token> createUser(@Body User user);
 }

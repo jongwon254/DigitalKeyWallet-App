@@ -15,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewResult;
+    private JsonPlaceHolderApi jsonPlaceHolderApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
+        //getKeys();
+        createUser();
+
+    }
+
+    private void getKeys() {
         String authToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkB0ZXN0LmNvbSIsImlhdCI6MTY1Mzg0MDg0MywiZXhwIjoxNjU0NDQ1NjQzfQ.vwQqXaRPDogHf1DpTtyNoABLIO6msCl6iyv_lNnBHdg";
 
         Call<List<Key>> call = jsonPlaceHolderApi.getKeys("Bearer " + authToken);
@@ -53,11 +60,36 @@ public class MainActivity extends AppCompatActivity {
                     content += "Car Model: " + key.getCarModel() + "\n\n";
 
                     textViewResult.append(content);
-                 }
+                }
             }
 
             @Override
             public void onFailure(Call<List<Key>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void createUser() {
+        User user = new User("test2@test.com", "1234");
+
+        Call<Token> call = jsonPlaceHolderApi.createUser(user);
+
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if(!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                Token token = response.body();
+
+                textViewResult.setText(token.getToken());
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
