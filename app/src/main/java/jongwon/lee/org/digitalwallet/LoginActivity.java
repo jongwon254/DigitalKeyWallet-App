@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,8 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // API Connection
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private Token token;
-    private boolean successfulConnection = false;
+    //private String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraWUuc2NvdHRAZ21haWwuY29tIiwiaWF0IjoxNjUzOTQ4NDUxLCJleHAiOjE2ODU0ODQ0NTF9.Mt-ikV17k9DJfCQLopOHwRqyyk1gQTtLxLQqHKt2p9o";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +62,15 @@ public class LoginActivity extends AppCompatActivity {
                 String password = text_password.getText().toString();
 
                 // input check
-                if(email.isEmpty()) {
+                if (email.isEmpty()) {
                     text_email.setError("Please enter your email.");
                     text_email.requestFocus();
-                } else if(password.isEmpty()) {
+                } else if (password.isEmpty()) {
                     text_password.setError("Please enter your password.");
                     text_password.requestFocus();
-                } else if(email.isEmpty() && password.isEmpty()) {
+                } else if (email.isEmpty() && password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter your information!", Toast.LENGTH_SHORT).show();
-                } else if(!(email.isEmpty() && password.isEmpty())) {
+                } else if (!(email.isEmpty() && password.isEmpty())) {
                     // correct input
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("http://10.0.2.2:8080/")
@@ -79,65 +79,99 @@ public class LoginActivity extends AppCompatActivity {
 
                     jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-                    // login user
-                    logInUser(email, password);
+                    // login user on separate thread
+                    String token = logInUser(email, password);
 
                     // get keys with authentication token
-                    if(successfulConnection) {
-                        getKeys(token.getToken());
+                    getKeys(token);
 
-                        // go to keys screen
-                        Toast.makeText(LoginActivity.this,"Login successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, KeyActivity.class);
-                        startActivity(intent);
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
+                    // go to keys screen
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, KeyActivity.class);
+                    startActivity(intent);
                 }
             }
         });
     }
 
-    private void logInUser(String email, String password) {
+    private String logInUser(String email, String password) {
         User user = new User(email, password);
+        final String[] token = new String[1];
 
         Call<Token> call = jsonPlaceHolderApi.logInUser(user);
 
-        call.enqueue(new Callback<Token>() {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if(!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
-                    successfulConnection = false;
-                    return;
+            public void run() {
+                try {
+                    Response<Token> response = call.execute();
+
+                    if (!response.isSuccessful()) {
+                        System.out.println("Code: " + response.code());
+                        Toast.makeText(LoginActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    token[0] = response.body().getToken();
+
+                    System.out.println("method token: " + token[0]);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                token = response.body();
+                /*call.enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Call<Token> call, Response<Token> response) {
+                        if(!response.isSuccessful()) {
+                            System.out.println("Code: " + response.code());
+                            Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                System.out.println(token.getToken());
-                successfulConnection = true;
-            }
+                        token[0] = response.body().getToken();
 
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                System.out.println(t.getMessage());
-                successfulConnection = false;
+                        System.out.println("method token: " + token[0]);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Token> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
+                        System.out.println(t.getMessage());
+                    }
+                });
+            }*/
             }
         });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return token[0];
     }
 
     private void getKeys(String token) {
         Call<List<Key>> call = jsonPlaceHolderApi.getKeys("Bearer " + token);
 
+        System.out.println("Get keys token: " + token);
+
         call.enqueue(new Callback<List<Key>>() {
             @Override
             public void onResponse(Call<List<Key>> call, Response<List<Key>> response) {
                 if(!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
+                    System.out.println("Get Keys Code: " + response.code());
+                    Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                List<Key> keys = response.body();
+                System.out.println(response.body().get(0).getCarModel());
+                System.out.println(response.body().get(1).getCarModel());
+
+                /*List<Key> keys = response.body();
                 StringBuilder content = new StringBuilder();
 
                 for(Key key : keys) {
@@ -148,11 +182,12 @@ public class LoginActivity extends AppCompatActivity {
                     content.append("Car Model: " + key.getCarModel() + "\n\n");
                 }
 
-                System.out.println(content.toString());
+                System.out.println(content.toString());*/
             }
 
             @Override
             public void onFailure(Call<List<Key>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
             }
         });
