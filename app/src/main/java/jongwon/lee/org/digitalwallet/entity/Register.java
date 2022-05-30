@@ -1,15 +1,18 @@
-package jongwon.lee.org.digitalwallet;
+package jongwon.lee.org.digitalwallet.entity;
 
-public class Key {
+public class Register {
 
     private int id;
+    private String email;
     private String firstName;
     private String lastName;
-    private String carBrand;
-    private String carModel;
 
     public int getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getFirstName() {
@@ -18,13 +21,5 @@ public class Key {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getCarBrand() {
-        return carBrand;
-    }
-
-    public String getCarModel() {
-        return carModel;
     }
 }

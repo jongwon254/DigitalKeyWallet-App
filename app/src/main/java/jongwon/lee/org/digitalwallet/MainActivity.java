@@ -1,6 +1,10 @@
 package jongwon.lee.org.digitalwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import jongwon.lee.org.digitalwallet.entity.Key;
+import jongwon.lee.org.digitalwallet.entity.Register;
+import jongwon.lee.org.digitalwallet.entity.Token;
+import jongwon.lee.org.digitalwallet.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        User user = new User("test7@test.com", "1234");
+        User user = new User("test7@test.com", "1234", "Kie", "Scott");
 
         Call<Register> call = jsonPlaceHolderApi.registerUser(user);
 
@@ -108,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                textViewResult.setText("Code :" + response.code() + "\n" + response.body().getEmail());
+                textViewResult.setText("Code :" + response.code() + "\n" + response.body().getEmail() + " " + response.body().getFirstName() + " " + response.body().getLastName());
             }
 
             @Override

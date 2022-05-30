@@ -1,4 +1,4 @@
-package jongwon.lee.org.digitalwallet;
+package jongwon.lee.org.digitalwallet.entity;
 
 public class Token {
 
