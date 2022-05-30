@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                             getKeys(token.getToken());
 
                             // go to keys screen
-                            Toast.makeText(RegisterActivity.this,"Login successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this,"Register successful", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, KeyActivity.class);
                             startActivity(intent);
                         }

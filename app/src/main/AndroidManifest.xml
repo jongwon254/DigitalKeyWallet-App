@@ -11,6 +11,12 @@
         android:theme="@style/Theme.DigitalWallet"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PolestarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BmwActivity"
+            android:exported="false" />
+        <activity
             android:name=".KeyActivity"
             android:exported="false" />
         <activity

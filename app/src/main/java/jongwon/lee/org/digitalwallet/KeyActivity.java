@@ -1,6 +1,7 @@
 package jongwon.lee.org.digitalwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import jongwon.lee.org.digitalwallet.entity.Key;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,21 +29,21 @@ public class KeyActivity extends AppCompatActivity {
         button_bmw_big.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(KeyActivity.this, BmwActivity.class));
             }
         });
 
         button_bmw_small.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(KeyActivity.this, BmwActivity.class));
             }
         });
 
         button_polestar_small.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(KeyActivity.this, PolestarActivity.class));
             }
         });
     }

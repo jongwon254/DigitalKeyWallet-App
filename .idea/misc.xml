@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_bmw.xml" value="0.1" />
         <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_key.xml" value="0.22" />
         <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_polestar.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/joey_/AndroidStudioProjects/DigitalWallet/app/src/main/res/layout/activity_register.xml" value="0.3333333333333333" />
       </map>
     </option>
