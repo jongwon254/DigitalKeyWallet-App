@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     // API Connection
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraWUuc2NvdHRAZ21haWwuY29tIiwiaWF0IjoxNjUzOTQ4NDUxLCJleHAiOjE2ODU0ODQ0NTF9.Mt-ikV17k9DJfCQLopOHwRqyyk1gQTtLxLQqHKt2p9o";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +83,20 @@ public class RegisterActivity extends AppCompatActivity {
                     registerUser(email, password, firstName, lastName);
 
                     // login user
-                    logInUser(email, password);
+                    String token = logInUser(email, password);
 
                     // get keys with authentication token
-                    getKeys(token);
+                    if(!token.isEmpty()) {
+                        getKeys(token);
 
-                    // go to keys screen
-                    Toast.makeText(RegisterActivity.this, "Register successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, KeyActivity.class);
-                    startActivity(intent);
+                        // go to keys screen
+                        Toast.makeText(RegisterActivity.this, "Register successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, KeyActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Register not successful", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
@@ -103,7 +107,25 @@ public class RegisterActivity extends AppCompatActivity {
 
         Call<Register> call = jsonPlaceHolderApi.registerUser(user);
 
-        call.enqueue(new Callback<Register>() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response<Register> response = call.execute();
+
+                    if (!response.isSuccessful()) {
+                        System.out.println("Code: " + response.code());
+                        Toast.makeText(RegisterActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    System.out.println("Code :" + response.code() + "\n" + response.body().getEmail() + " " + response.body().getFirstName() + " " + response.body().getLastName());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+        /*call.enqueue(new Callback<Register>() {
             @Override
             public void onResponse(Call<Register> call, Response<Register> response) {
                 if (!response.isSuccessful()) {
@@ -119,45 +141,88 @@ public class RegisterActivity extends AppCompatActivity {
             public void onFailure(Call<Register> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
                 System.out.println(t.getMessage());
+            }*/
             }
         });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void logInUser(String email, String password) {
+    private String logInUser(String email, String password) {
         User user = new User(email, password);
+        final String[] token = new String[1];
 
         Call<Token> call = jsonPlaceHolderApi.logInUser(user);
 
-        call.enqueue(new Callback<Token>() {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if(!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
-                    Toast.makeText(RegisterActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
-                    return;
+            public void run() {
+                try {
+                    Response<Token> response = call.execute();
+
+                    if (!response.isSuccessful()) {
+                        System.out.println("Code: " + response.code());
+                        Toast.makeText(RegisterActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    token[0] = response.body().getToken();
+
+                    System.out.println("method token: " + token[0]);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                token = response.body().getToken();
+                /*call.enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Call<Token> call, Response<Token> response) {
+                        if(!response.isSuccessful()) {
+                            System.out.println("Code: " + response.code());
+                            Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                System.out.println(token);
-            }
+                        token[0] = response.body().getToken();
 
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
-                System.out.println(t.getMessage());
+                        System.out.println("method token: " + token[0]);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Token> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
+                        System.out.println(t.getMessage());
+                    }
+                });
+            }*/
             }
         });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return token[0];
     }
 
     private void getKeys(String token) {
         Call<List<Key>> call = jsonPlaceHolderApi.getKeys("Bearer " + token);
 
+        System.out.println("Get keys token: " + token);
+
         call.enqueue(new Callback<List<Key>>() {
             @Override
             public void onResponse(Call<List<Key>> call, Response<List<Key>> response) {
                 if(!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
+                    System.out.println("Get Keys Code: " + response.code());
                     Toast.makeText(RegisterActivity.this,"Error Occurred!", Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // API Connection
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    //private String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraWUuc2NvdHRAZ21haWwuY29tIiwiaWF0IjoxNjUzOTQ4NDUxLCJleHAiOjE2ODU0ODQ0NTF9.Mt-ikV17k9DJfCQLopOHwRqyyk1gQTtLxLQqHKt2p9o";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +82,17 @@ public class LoginActivity extends AppCompatActivity {
                     String token = logInUser(email, password);
 
                     // get keys with authentication token
-                    getKeys(token);
+                    if(!token.isEmpty()) {
+                        getKeys(token);
 
-                    // go to keys screen
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, KeyActivity.class);
-                    startActivity(intent);
+                        // go to keys screen
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, KeyActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login not successful", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
@@ -116,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     System.out.println("method token: " + token[0]);
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -147,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         thread.start();
         try {
             thread.join();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
