@@ -63,11 +63,11 @@ public class RegisterActivity extends AppCompatActivity {
                     text_password.setError("Please enter your password.");
                     text_password.requestFocus();
                 } else if(firstName.isEmpty()) {
-                    text_password.setError("Please enter your first name.");
-                    text_password.requestFocus();
+                    text_first_name.setError("Please enter your first name.");
+                    text_first_name.requestFocus();
                 } else if(lastName.isEmpty()) {
-                    text_password.setError("Please enter your last name.");
-                    text_password.requestFocus();
+                    text_last_name.setError("Please enter your last name.");
+                    text_last_name.requestFocus();
                 } else if(email.isEmpty() && password.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Please enter your information!", Toast.LENGTH_SHORT).show();
                 } else if(!(email.isEmpty() && password.isEmpty() && firstName.isEmpty() && lastName.isEmpty())) {
@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     token[0] = response.body().getToken();
 
-                    System.out.println("method token: " + token[0]);
+                    System.out.println("login token: " + token[0]);
 
                 } catch (Exception e) {
                     e.printStackTrace();

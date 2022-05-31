@@ -25,7 +25,7 @@ public class KeyActivity extends AppCompatActivity {
         button_bmw_small = findViewById(R.id.button_bmw_small);
         button_polestar_small = findViewById(R.id.button_polestar_small);
 
-        // register button click
+        // bmw key
         button_bmw_big.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +40,7 @@ public class KeyActivity extends AppCompatActivity {
             }
         });
 
+        // polestar key
         button_polestar_small.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

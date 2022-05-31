@@ -18,7 +18,7 @@ public class PolestarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmw);
+        setContentView(R.layout.activity_polestar);
 
         button_unlock = findViewById(R.id.button_unlock);
         button_trunk = findViewById(R.id.button_trunk);

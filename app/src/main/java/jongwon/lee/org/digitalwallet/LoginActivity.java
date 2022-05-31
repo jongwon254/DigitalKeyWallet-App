@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(LoginActivity.this, "Login not successful", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
@@ -118,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     token[0] = response.body().getToken();
 
-                    System.out.println("method token: " + token[0]);
+                    System.out.println("login token: " + token[0]);
 
                 } catch (Exception e) {
                     e.printStackTrace();
