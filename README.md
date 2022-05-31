@@ -12,7 +12,7 @@ Android App to store personal digital keys in a secure wallet with an own [REST 
 - The Android app communicates with the REST API via GET and POST methods
 - Users can register or login and access their digital keys after authentication
 - The user data is stored in a MySQL database with the hashed password (HS256 algorithm)
-- Users can unlock their car with NFC or UWB and control it with remote controls
+- Users can unlock their car with NFC or UWB and control it with remote controls (planned)
 
 ## Screenshots
 
