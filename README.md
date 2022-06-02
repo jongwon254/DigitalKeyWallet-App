@@ -18,10 +18,7 @@ Android App to store personal digital keys in a secure wallet with an own [REST 
 
 ![screen1](https://user-images.githubusercontent.com/36485235/171295679-69ed918b-31ac-43b5-8234-c751b263200f.png)
 ![screen2](https://user-images.githubusercontent.com/36485235/171295697-803b4d46-5f9e-4b15-b95f-4d03776a1d71.png)
-<img width="800" alt="androidstudio" src="https://user-images.githubusercontent.com/36485235/171295624-c03fe4ca-7583-40d8-a033-7177cef865ab.png">
 
-
-<img width="800" alt="figma" src="https://user-images.githubusercontent.com/36485235/171295628-0e763af4-d9fe-4588-a87b-2ff8af35ec3f.png">
 
 ## More Info
 [Visit App Demo](https://appetize.io/embed/yhwyqe0pxe073nym7fycqae6f8?device=pixel6&osVersion=12.0&scale=75)
