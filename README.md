@@ -1,7 +1,7 @@
 ![key](https://user-images.githubusercontent.com/36485235/171294454-6dda8e72-eedd-44b1-8b28-e2fd9d468ac1.png)
 
 # Digital Key App 👛
-Android App to store personal digital keys in a secure wallet with an own [REST API](https://github.com/jongwon254/Digital-Key-API).
+Android app to store personal digital keys in a secure wallet with an own [REST API](https://github.com/jongwon254/Digital-Key-API).
 
 ## Technologies
 - Language: Java
