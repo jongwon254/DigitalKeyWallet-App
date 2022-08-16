@@ -1,12 +1,17 @@
 ![key](https://user-images.githubusercontent.com/36485235/171294454-6dda8e72-eedd-44b1-8b28-e2fd9d468ac1.png)
 
-# Digital Key App 👛
+# Digital Key App
 Android app to store personal digital keys in a secure wallet with an [own REST API](https://github.com/jongwon254/Digital-Key-API).
 
 ## Technologies
 - Language: Java
-- Built with Android Studio, Retrofit, Gson, and [own REST API](https://github.com/jongwon254/Digital-Key-API)
-- Designed with Figma
+- Backend: 
+  - REST API built with Spring Boot and MySQL Database
+  - Authentication with Spring Security (HS256 Hashing) 
+  - Deployed with Docker on Azure Cloud Kubernetes Cluster
+- Frontend: 
+  - Designed with Figma
+  - Built with XML in Android Studio
 
 ## Functionality
 - The Android app communicates with the REST API via GET and POST methods
@@ -21,7 +26,4 @@ Android app to store personal digital keys in a secure wallet with an [own REST 
 
 
 ## More Info
-[Visit App Demo](https://appetize.io/embed/yhwyqe0pxe073nym7fycqae6f8?device=pixel6&osVersion=12.0&scale=75)
-
-
 [Visit My Website](https://jongwonlee.dev/digital-key-app)
