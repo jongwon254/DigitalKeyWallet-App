@@ -1,4 +1,4 @@
-![key](https://user-images.githubusercontent.com/36485235/171294454-6dda8e72-eedd-44b1-8b28-e2fd9d468ac1.png)
+![key](https://user-images.githubusercontent.com/36485235/185005295-f0dd7ff1-90c3-49e6-b79c-2c73efda31c5.png)
 
 # Digital Key App
 Android app to store personal digital keys in a secure wallet with an [own REST API](https://github.com/jongwon254/Digital-Key-API).
