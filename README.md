@@ -26,4 +26,4 @@ Android app to store personal digital keys in a secure wallet with an [own REST 
 
 
 ## More Info
-[Visit My Website](https://jongwonlee.dev/digital-key-app)
+[Visit Website](https://jongwonlee.dev/digital-key-app)
